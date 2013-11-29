@@ -1,0 +1,168 @@
+/*
+*µÇÂ¼¿ò±³¾°
+*/
+LoginScene#LoginScene
+{
+        border:0px;
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/background.png) 0 0 0 0 stretch stretch;
+}
+/*
+*µÇÂ¼¿ò±êÌâÀ¸
+*/
+QToolButton#toolButtonClose
+{
+        width: 39px;
+        height: 20px;
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_normal.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonClose:hover
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_highlight.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonClose:pressed
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_down.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonMin
+{
+        width: 28px;
+        height: 20px;
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_normal.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonMin:hover
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_highlight.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonMin:pressed
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_down.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonSet
+{
+        width: 28px;
+        height: 20px;
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_normal.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonSet:hover
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_hover.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#toolButtonSet:pressed
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_press.png) 0 0 0 0 stretch stretch;
+}
+
+/*
+*µÇÂ¼¿òÕËºÅÃÜÂëÊäÈë¿ò
+*/
+QLineEdit#ledt_userName
+{
+        border:0px;
+        width:200px;
+        height:40px;
+        font-size:15px;
+        font-family:'Microsoft YaHei';
+        color:#CCCCCC;
+        background-color:rgba(102,102,102,80%);
+}
+QLineEdit#ledt_passwd
+{
+        border:0px;
+        width:200px;
+        height:40px;
+        font-size:15px;
+        font-family:'Microsoft YaHei';
+        color:#CCCCCC;
+        background-color:rgba(102,102,102,80%);
+}
+/*
+*µÇÂ¼È·ÈÏ°´Å¥
+*/
+QPushButton#pbtn_login:hover
+{
+        color:#444444;
+        background-color:rgba(140,140,140,90%);
+}
+
+QPushButton#pbtn_login
+{
+        border:0px;
+        padding:-1px;
+        width:260px;
+        height:40px;
+        font-size:15px;
+        font-family:'Microsoft YaHei';
+        color:#CCCCCC;
+        background-color:rgba(102,102,102,80%);
+}
+
+QPushButton#pbtn_login:pressed
+{
+        color:#CCCCCC;
+        background-color:rgba(112,112,112,100%);
+}
+/*
+*µÇÂ¼¹´Ñ¡Å¥
+*/
+QCheckBox#cbox_remember
+{
+        font-size:12px;
+        font-family:'Microsoft YaHei';
+        color:#CCCCCC;
+}
+
+QCheckBox#cbox_autoLogin
+{
+        font-size:12px;
+        font-family:'Microsoft YaHei';
+        color:#CCCCCC;
+}
+
+QLabel#lbe_login_error
+{
+        font-size:12px;
+        font-family:'Microsoft YaHei';
+        color:#CCCCCC;
+}
+
+/*
+* Ö÷½çÃæ
+*/
+
+MainWindow#main_window
+{
+        background-color:rgb(57,57,57);
+}
+
+QWidget#scrollAreaWidgetContents
+{
+        background-color:rgb(57,57,57);
+}
+
+Navigation#navigation
+{
+        border:0pix;
+}
+
+LogoScene#logo
+{
+        background-color:rgb(57,57,57);
+        border-image:url(:/MainScene/Resource/Img/MainScene/logo.png) 0 0 0 0 stretch stretch;
+}
+
+MyTableView
+{
+        border:0px;
+        background:rgba(74,74,74,255);
+}
+
+
+

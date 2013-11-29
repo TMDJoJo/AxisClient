@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/LoginScene">
+        <file>Resource/Img/LoginScene/background.png</file>
+        <file>Resource/Img/LoginScene/btn_set_press.png</file>
+        <file>Resource/Img/LoginScene/btn_close_down.png</file>
+        <file>Resource/Img/LoginScene/btn_close_highlight.png</file>
+        <file>Resource/Img/LoginScene/btn_close_normal.png</file>
+        <file>Resource/Img/LoginScene/btn_mini_down.png</file>
+        <file>Resource/Img/LoginScene/btn_mini_highlight.png</file>
+        <file>Resource/Img/LoginScene/btn_mini_normal.png</file>
+        <file>Resource/Img/LoginScene/btn_set_hover.png</file>
+        <file>Resource/Img/LoginScene/btn_set_normal.png</file>
+    </qresource>
+    <qresource prefix="/Navigation">
+        <file>Resource/Img/Navigation/1.png</file>
+        <file>Resource/Img/Navigation/button.png</file>
+    </qresource>
+    <qresource prefix="/MainScene">
+        <file>Resource/Img/MainScene/logo.png</file>
+    </qresource>
+    <qresource prefix="/Tray">
+        <file>Resource/Img/Tray/tray_icon.png</file>
+    </qresource>
+</RCC>

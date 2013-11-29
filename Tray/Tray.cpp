@@ -25,9 +25,6 @@ void Tray::iconActivated(QSystemTrayIcon::ActivationReason reason){
         if( mainScene->isHidden() ){
             emit mainScene->show();
         }
-        else{
-            emit mainScene->hide();
-        }
         break;
     default:
         ;

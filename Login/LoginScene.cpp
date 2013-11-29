@@ -17,18 +17,21 @@ LoginScene::LoginScene(QWidget *parent) :
 
     CreateScene();
 
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
-    Q_ASSERT(animation);
-    animation->setDuration(300);
-    animation->setStartValue(0);
-    animation->setEndValue(1);
-    animation->start();
+    animation_ = new QPropertyAnimation(this, "windowOpacity");
+    Q_ASSERT(animation_);
+    animation_->setDuration(300);
+    animation_->setStartValue(0);
+    animation_->setEndValue(1);
+    animation_->start();
 
 }
 
 LoginScene::~LoginScene()
 {
     delete ui;
+    if(NULL == animation_)
+        delete animation_,animation_ = NULL;
+
 }
 void LoginScene::createTitleBar(){
 
@@ -118,9 +121,7 @@ void LoginScene::doToolButtonClose(){
 void LoginScene::on_pbtn_login_clicked()
 {
     if(ui->ledt_userName->text() == "a"){
-        AErrorWidget* w = new AErrorWidget(this);
-        w->setTipInfo(tr("ÃÜÂë´íÎó"));
-        w->show();
+        AErrorWidget::warning(this,tr("ÃÜÂë´íÎó£¡"));
     }
     else{
         accept();

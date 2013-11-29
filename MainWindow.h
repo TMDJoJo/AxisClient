@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMap>
+#include <QPropertyAnimation>
 
 #include "./WorkScene/IWorkScene.h"
 #include "./Tray/Tray.h"
@@ -30,13 +31,15 @@ private:
     bool AddWorkScene(const QString& name,IWorkScene* scene);    ////添加工作场景
 
 protected:
-    void paintEvent(QPaintEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void paintEvent(QPaintEvent* event);
+    void closeEvent(QCloseEvent* event);
+    void showEvent(QShowEvent* event);
 
 private:
     Ui::MainWindow *ui;
     QMap<QString,IWorkScene*> wrokScenes;
 
+    QPropertyAnimation* animation_;
 
     Tray* tray;                 ////托盘
     TrayIconMenu* trayMenu;      ////托盘菜单栏

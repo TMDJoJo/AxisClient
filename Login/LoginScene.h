@@ -33,8 +33,7 @@ private slots:
 
 private:
     Ui::LoginScene *ui;
-    QPropertyAnimation* animation;
-//#include "./AxisBaseWidget/AErrorWidget.h"
+    QPropertyAnimation* animation_;
 
     bool		mMoveing;//鼠标按下
     QPoint	    mMovePosition;  //移动的距离

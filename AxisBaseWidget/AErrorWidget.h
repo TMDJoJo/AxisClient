@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QMessageBox>
 
 class AErrorWidget : public QWidget
 {
@@ -18,22 +19,25 @@ class AErrorWidget : public QWidget
     };
 
 public:
-    explicit AErrorWidget(QWidget *parent = 0);
     ~AErrorWidget();
 
-    void setTipInfo(QString info);
-    void setTipIcon(QPixmap pixmap);
+    static void warning(QWidget* parent,
+                        const QString& msg,
+                        const QPixmap& icon = QPixmap(":/Resource/Img/AxisBaseWidget/warning.png"),
+                        int live_time_ms = 2000);
+    void setTipInfo(const QString& info);
+    void setTipIcon(const QPixmap& pixmap);
 protected slots:
     //关闭按钮主要进行提示框的隐藏
     void CloseWidget();
     void OnAnimationFinish();
 signals:
-    
-
 
 private:
+    explicit AErrorWidget(QWidget *parent,int life_time_ms);
+private:
     QToolButton* close_button_;
-    QLabel* msg_label_;
+    QLabel* icon_label_;
     QLabel* ask_label_;
     
     int parent_height_;  //父窗口高

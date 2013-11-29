@@ -21,4 +21,7 @@
     <qresource prefix="/Tray">
         <file>Resource/Img/Tray/tray_icon.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>Resource/Img/AxisBaseWidget/warning.png</file>
+    </qresource>
 </RCC>

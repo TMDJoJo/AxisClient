@@ -7,10 +7,11 @@
 #include "./WorkScene/WelcomeScene.h"
 #include "./WorkScene/TestWorkScene.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
     tray(NULL),
     trayMenu(NULL),
+    animation_(NULL),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -89,7 +90,7 @@ void MainWindow::InitTray(){
     tray->SetMainWindow(this);
     tray->setContextMenu(trayMenu);
     tray->show();
-    tray->showMessage(tr("AXIS自动化运营平台"),tr("不可思议之 AXIS 已启动，点击托盘可最小化！"),
+    tray->showMessage(tr("AXIS自动化运营平台"),tr("不可思议之 AXIS 已启动！"),
                           QSystemTrayIcon::NoIcon,2000);
 }
 
@@ -127,4 +128,20 @@ void MainWindow::closeEvent(QCloseEvent *event){
         hide();
         event->ignore();
     }
+}
+
+void MainWindow::showEvent(QShowEvent* event){
+    animation_ = new QPropertyAnimation(this,"windowOpacity");
+    Q_ASSERT(animation_);
+    animation_->setDuration(400);
+    animation_->setStartValue(0);
+    animation_->setEndValue(1);
+    animation_->start();
+//    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
+//    animation->setDuration(300);
+//    animation->setStartValue(QRect(this->pos().x()+1050*0.2,this->pos().y()+600*0.2,1050*0.4,600*0.4));
+//    animation->setEndValue(QRect(this->pos().x(),this->pos().y(), 1050, 600));
+//    animation->start();
+
+    event->ignore();
 }

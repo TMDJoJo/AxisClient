@@ -3,17 +3,17 @@
 #include <QStyle>
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QMessageBox>
 
-
-AErrorWidget::AErrorWidget(QWidget *parent) :
+AErrorWidget::AErrorWidget(QWidget *parent,int life_time_ms) :
     QWidget(parent),
     destroy_time_(NULL),
     close_button_(NULL),
-    msg_label_(NULL),
+    icon_label_(NULL),
     ask_label_(NULL),
     animation_(NULL),
     life_(BORNING),
-    life_time_(2000)
+    life_time_(life_time_ms)
 {
     //获取主界面的宽度
     parent_height_ = parent->height();
@@ -42,10 +42,10 @@ AErrorWidget::AErrorWidget(QWidget *parent) :
     QObject::connect(close_button_, SIGNAL(clicked()), this, SLOT(CloseWidget()));
 
     //设置提示图片
-    msg_label_ = new QLabel(this);
-    msg_label_->setGeometry(QRect(5, 5, 20, 20));
-    msg_label_->setStyleSheet("background-color: transparent;");
-    msg_label_->setScaledContents(true);
+    icon_label_ = new QLabel(this);
+    icon_label_->setGeometry(QRect(5, 5, 21, 21));
+    icon_label_->setStyleSheet("background-color: transparent;");
+    icon_label_->setScaledContents(true);
 
     //设置提示信息
     ask_label_ = new QLabel(this);
@@ -64,8 +64,8 @@ AErrorWidget::AErrorWidget(QWidget *parent) :
     connect(animation_, SIGNAL(finished()), this, SLOT(OnAnimationFinish()));
 }
 AErrorWidget::~AErrorWidget(){
-    if(msg_label_ == NULL)
-        delete msg_label_,msg_label_ = NULL;
+    if(icon_label_ == NULL)
+        delete icon_label_,icon_label_ = NULL;
     if(close_button_ == NULL)
         delete close_button_,close_button_ = NULL;
     if(ask_label_ == NULL)
@@ -74,13 +74,24 @@ AErrorWidget::~AErrorWidget(){
         delete animation_,animation_ = NULL;
 }
 
-void AErrorWidget::setTipInfo(QString info){
+void AErrorWidget::warning(QWidget* parent,
+                           const QString& msg,
+                           const QPixmap& icon /*= QPixmap(":/Resource/Img/AxisBaseWidget/warning.png"*/,
+                           int live_time_ms/* = 2000*/){
+    AErrorWidget* warning_widget = new AErrorWidget(parent,live_time_ms);
+    Q_ASSERT(warning_widget);
+    warning_widget->setTipInfo(msg);
+    warning_widget->setTipIcon(icon);
+    warning_widget->show();
+}
+
+void AErrorWidget::setTipInfo(const QString& info){
     //设置提示信息
     ask_label_->setText(info);
 }
 
-void AErrorWidget::setTipIcon(QPixmap pixmap){
-    msg_label_->setPixmap(pixmap);
+void AErrorWidget::setTipIcon(const QPixmap& pixmap){
+    icon_label_->setPixmap(pixmap);
 }
 
 ////关闭按钮
@@ -109,6 +120,7 @@ void AErrorWidget::CloseWidget(){
     }
 
 }
+
 ////动画播放完成响应函数
 void AErrorWidget::OnAnimationFinish(){
 

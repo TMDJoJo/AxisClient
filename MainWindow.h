@@ -23,9 +23,9 @@ public:
     void ChangeWorkScene(const QString& workName);  ////切换工作场景
 
 private:
-    void ViewInit();
-    void DataInit();
-    void TrayInit();        ////初始化托盘
+    void InitView();
+    void InitData();
+    void InitTray();        ////初始化托盘
 
     bool AddWorkScene(const QString& name,IWorkScene* scene);    ////添加工作场景
 

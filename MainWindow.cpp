@@ -19,10 +19,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->navigation->Init(this);
     ui->logo->Init(this);
 
-    TrayInit();
-    ViewInit();
-    DataInit();
+    this->setAutoFillBackground(true);
 
+    InitTray();
+    InitView();
+    InitData();
 
 }
 
@@ -38,7 +39,7 @@ void MainWindow::paintEvent(QPaintEvent*){
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
 
-void MainWindow::ViewInit(){
+void MainWindow::InitView(){
 
     ////设置窗体标题栏隐藏并设置位于顶层
     //setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -73,13 +74,13 @@ void MainWindow::ViewInit(){
     ui->navigation->addVerticalSpacer();
 }
 
-void MainWindow::DataInit(){
+void MainWindow::InitData(){
 
 
 
 }
 
-void MainWindow::TrayInit(){
+void MainWindow::InitTray(){
     tray = new Tray(this);
     trayMenu = new TrayIconMenu(this);
     Q_ASSERT(tray);

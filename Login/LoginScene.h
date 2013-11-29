@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMouseEvent>
+#include <QPropertyAnimation>
 
 namespace Ui {
 class LoginScene;
@@ -32,9 +33,12 @@ private slots:
 
 private:
     Ui::LoginScene *ui;
+    QPropertyAnimation* animation;
+//#include "./AxisBaseWidget/AErrorWidget.h"
 
     bool		mMoveing;//鼠标按下
     QPoint	    mMovePosition;  //移动的距离
+    //AErrorWidget w;
 };
 
 #endif // LOGINSCENE_H

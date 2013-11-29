@@ -17,6 +17,13 @@ LoginScene::LoginScene(QWidget *parent) :
 
     CreateScene();
 
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+    Q_ASSERT(animation);
+    animation->setDuration(300);
+    animation->setStartValue(0);
+    animation->setEndValue(1);
+    animation->start();
+
 }
 
 LoginScene::~LoginScene()
@@ -112,7 +119,7 @@ void LoginScene::on_pbtn_login_clicked()
 {
     if(ui->ledt_userName->text() == "a"){
         AErrorWidget* w = new AErrorWidget(this);
-        w->setTipInfo("mi ma cuo wu");
+        w->setTipInfo(tr("ÃÜÂë´íÎó"));
         w->show();
     }
     else{

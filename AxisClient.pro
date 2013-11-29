@@ -43,4 +43,3 @@ RESOURCES += \
     WorkDirectory.qrc
 
 QT += webkit
-QT += webkit webkitwidgets

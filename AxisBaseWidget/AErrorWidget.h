@@ -25,8 +25,18 @@ public:
                         const QString& msg,
                         const QPixmap& icon = QPixmap(":/Resource/Img/AxisBaseWidget/warning.png"),
                         int live_time_ms = 2000);
+
+    static void information(QWidget* parent,
+                        const QString& msg,
+                        const QPixmap& icon = QPixmap(":/Resource/Img/AxisBaseWidget/information.png"),
+                        int live_time_ms = 2000);
+
+
     void setTipInfo(const QString& info);
     void setTipIcon(const QPixmap& pixmap);
+
+protected:
+    void paintEvent(QPaintEvent* event);
 protected slots:
     //关闭按钮主要进行提示框的隐藏
     void CloseWidget();

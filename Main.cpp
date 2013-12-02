@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
 
     LoginScene login;
-    login.setObjectName("LoginScene");
 
     if(login.exec() == QDialog::Accepted)
     {
@@ -30,5 +29,6 @@ int main(int argc, char *argv[])
         w.resize(1050,600);
         return app.exec();
     }
+
     return 0;
 }

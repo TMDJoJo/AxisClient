@@ -164,5 +164,29 @@ MyTableView
         background:rgba(74,74,74,255);
 }
 
-
-
+/*
+*错误提示框样式
+*/
+AErrorWidget#warning
+{
+        background-color:rgba(180,50,50,50%);
+}
+AErrorWidget#infromation
+{
+        background-color:rgba(50,180,50,50%);
+}
+QToolButton#error_widget_close_btn
+{
+        background-color:transparent;
+}
+QLabel#error_widget_icon
+{
+        background-color:transparent;
+}
+QLabel#error_widget_msg
+{
+        color:#000000;
+        font-size:15px;
+        font-family:'Microsoft YaHei';
+        background-color:transparent;
+}

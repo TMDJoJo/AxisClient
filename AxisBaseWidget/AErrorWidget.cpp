@@ -3,6 +3,8 @@
 #include <QStyle>
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QStyleOption>
+#include <QPainter>
 #include <QMessageBox>
 
 AErrorWidget::AErrorWidget(QWidget *parent,int life_time_ms) :
@@ -23,33 +25,31 @@ AErrorWidget::AErrorWidget(QWidget *parent,int life_time_ms) :
 
     //设置标题栏隐藏
     this->setWindowFlags(Qt::FramelessWindowHint);
-    //设置背景色透明
-    QPalette palette;
-    QColor color(190, 230, 250);
-    color.setAlphaF(0.6);
-    palette.setBrush(this->backgroundRole(), color);
-    this->setPalette(palette);
+
     //如果这个QWidget直接show，是有背景色的，但是如果放到一个父Widget中时，它就没有了效果。添加如下代码后就可以了：
     this->setAutoFillBackground(true);
 
     //构建关闭按钮
     close_button_= new QToolButton(this);
+    Q_ASSERT(close_button_);
+    close_button_->setObjectName("error_widget_close_btn");
     QPixmap close_pix = style()->standardPixmap(QStyle::SP_TitleBarCloseButton);
     close_button_->setIcon(close_pix);
-    close_button_->setStyleSheet("QToolButton{background-color: transparent;}");
     close_button_->setGeometry(parent_width_-20, 0, 20, 20);
     close_button_->setCursor(Qt::PointingHandCursor);
     QObject::connect(close_button_, SIGNAL(clicked()), this, SLOT(CloseWidget()));
 
     //设置提示图片
     icon_label_ = new QLabel(this);
+    Q_ASSERT(icon_label_);
+    icon_label_->setObjectName("error_widget_icon");
     icon_label_->setGeometry(QRect(5, 5, 21, 21));
-    icon_label_->setStyleSheet("background-color: transparent;");
     icon_label_->setScaledContents(true);
 
     //设置提示信息
     ask_label_ = new QLabel(this);
-    ask_label_->setStyleSheet("background-color: transparent; color: red;");
+    Q_ASSERT(ask_label_);
+    ask_label_->setObjectName("error_widget_msg");
     ask_label_->setGeometry(QRect(20, 0, parent_width_ - 40, this->height()));
     ask_label_->setAlignment(Qt::AlignCenter);
 
@@ -80,6 +80,19 @@ void AErrorWidget::warning(QWidget* parent,
                            int live_time_ms/* = 2000*/){
     AErrorWidget* warning_widget = new AErrorWidget(parent,live_time_ms);
     Q_ASSERT(warning_widget);
+    warning_widget->setObjectName("warning");
+    warning_widget->setTipInfo(msg);
+    warning_widget->setTipIcon(icon);
+    warning_widget->show();
+}
+
+void AErrorWidget::information(QWidget* parent,
+                           const QString& msg,
+                           const QPixmap& icon /*= QPixmap(":/Resource/Img/AxisBaseWidget/information.png"*/,
+                           int live_time_ms/* = 2000*/){
+    AErrorWidget* warning_widget = new AErrorWidget(parent,live_time_ms);
+    Q_ASSERT(warning_widget);
+    warning_widget->setObjectName("infromation");
     warning_widget->setTipInfo(msg);
     warning_widget->setTipIcon(icon);
     warning_widget->show();
@@ -92,6 +105,13 @@ void AErrorWidget::setTipInfo(const QString& info){
 
 void AErrorWidget::setTipIcon(const QPixmap& pixmap){
     icon_label_->setPixmap(pixmap);
+}
+
+void AErrorWidget::paintEvent(QPaintEvent* event){
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
 
 ////关闭按钮

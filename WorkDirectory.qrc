@@ -23,5 +23,6 @@
     </qresource>
     <qresource prefix="/">
         <file>Resource/Img/AxisBaseWidget/warning.png</file>
+        <file>Resource/Img/AxisBaseWidget/information.png</file>
     </qresource>
 </RCC>

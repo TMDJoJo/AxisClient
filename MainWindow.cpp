@@ -59,9 +59,9 @@ void MainWindow::InitView(){
     WelcomeScene* welcome = new WelcomeScene("welcome");
     AddWorkScene("welcome",welcome);
 
-    TestWorkScene* test1 = new TestWorkScene(tr("资产")+"emma");
+    TestWorkScene* test1 = new TestWorkScene(tr("资产"));
     test1->SetText(tr("资产")+"emma");
-    AddWorkScene(tr("资产")+"emma",test1);
+    AddWorkScene(tr("资产"),test1);
 
     TestWorkScene* test2 = new TestWorkScene(tr("资产")+"karl");
     test2->SetText(tr("资产")+"karl");

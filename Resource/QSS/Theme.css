@@ -190,3 +190,61 @@ QLabel#error_widget_msg
         font-family:'Microsoft YaHei';
         background-color:transparent;
 }
+
+/*
+*主对话框标题栏
+*/
+QWidget#main_window_title
+{
+        background-color:#444444;
+}
+QToolButton#main_tool_button_close
+{
+        width: 39px;
+        height: 20px;
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_normal.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_close:hover
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_highlight.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_close:pressed
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_down.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_min
+{
+        width: 28px;
+        height: 20px;
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_normal.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_min:hover
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_highlight.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_min:pressed
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_down.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_set
+{
+        width: 28px;
+        height: 20px;
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_normal.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_set:hover
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_hover.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_set:pressed
+{
+        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_press.png) 0 0 0 0 stretch stretch;
+}

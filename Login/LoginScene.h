@@ -30,7 +30,6 @@ private slots:
     void doToolButtonClose();
     void on_pbtn_login_clicked();
 
-
 private:
     Ui::LoginScene *ui;
     QPropertyAnimation* animation_;

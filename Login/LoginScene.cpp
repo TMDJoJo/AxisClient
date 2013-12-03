@@ -71,7 +71,7 @@ void LoginScene::createTitleBar(){
 }
 void LoginScene::CreateScene(){
     ////设置窗体标题栏隐藏并设置位于顶层
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
     ////可获取鼠标跟踪效果
     setMouseTracking(true);
 

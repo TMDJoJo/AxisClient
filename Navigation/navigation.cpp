@@ -1,6 +1,7 @@
 #include "navigation.h"
 #include <QtAlgorithms>
 #include <QPainter>
+#include "../MainWindow.h"
 
 Navigation::Navigation(QWidget *parent):
     QScrollArea(parent),

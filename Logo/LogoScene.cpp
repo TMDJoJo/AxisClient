@@ -1,9 +1,12 @@
+#include <QPainter>
+
 #include "LogoScene.h"
 #include "ui_LogoScene.h"
-#include <QPainter>
+#include "../MainWindow.h"
 
 LogoScene::LogoScene(QWidget *parent) :
     QWidget(parent),
+    main_widget_(NULL),
     ui(new Ui::LogoScene),
     isInit(false)
 {
@@ -20,7 +23,7 @@ bool LogoScene::Init(MainWindow* main){
     if(isInit)
         return false;
     isInit = true;
-    mainWidget = main;
+    main_widget_ = main;
     return true;
 }
 
@@ -35,7 +38,7 @@ void LogoScene::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton){
 
         if(isInit){
-            mainWidget->ChangeWorkScene("welcome");
+            main_widget_->ChangeWorkScene("welcome");
         }
     }
 }

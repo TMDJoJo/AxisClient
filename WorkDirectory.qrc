@@ -25,6 +25,15 @@
         <file>Resource/Img/MainScene/shadow_corner4.png</file>
         <file>Resource/Img/MainScene/shadow_left.png</file>
         <file>Resource/Img/MainScene/shadow_right.png</file>
+        <file>Resource/Img/MainScene/min_pressed.png</file>
+        <file>Resource/Img/MainScene/close.png</file>
+        <file>Resource/Img/MainScene/close_hover.png</file>
+        <file>Resource/Img/MainScene/close_pressed.png</file>
+        <file>Resource/Img/MainScene/min.png</file>
+        <file>Resource/Img/MainScene/min_hover.png</file>
+        <file>Resource/Img/MainScene/praise_pressed.png</file>
+        <file>Resource/Img/MainScene/praise.png</file>
+        <file>Resource/Img/MainScene/praise_hover.png</file>
     </qresource>
     <qresource prefix="/Tray">
         <file>Resource/Img/Tray/tray_icon.png</file>

@@ -5,14 +5,15 @@
 #include <QMenu>
 #include <QAction>
 #include <QMainWindow>
+#include <qDebug>
 
 class Tray : public QSystemTrayIcon
 {
     Q_OBJECT
 public:
     explicit Tray(QObject *parent = 0);
-    
-    void SetMainWindow(QMainWindow* main);
+    ~Tray(){}
+    void SetMainWindow(QWidget* main);
 private:
     void Init();
 private slots:
@@ -23,7 +24,7 @@ public slots:
 private:
     QMenu *trayIconMenu;
 
-    QMainWindow* mainScene;
+    QWidget* mainScene;
 };
 
 #endif // TRAY_H

@@ -10,7 +10,9 @@
 #include <QDebug>
 
 #include "mytableView.h"
-#include "../MainWindow.h"
+
+class MainWindow;
+
 class Navigation : public QScrollArea
 {
     Q_OBJECT

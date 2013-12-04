@@ -31,7 +31,7 @@ void Tray::iconActivated(QSystemTrayIcon::ActivationReason reason){
     }
 }
 
-void Tray::SetMainWindow(QMainWindow* main){
+void Tray::SetMainWindow(QWidget* main){
     Q_ASSERT(main);
     mainScene = main;
 }

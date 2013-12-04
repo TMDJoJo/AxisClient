@@ -12,12 +12,10 @@
 #include "./WorkScene/IWorkScene.h"
 #include "./Tray/Tray.h"
 #include "./Tray/TrayIconMenu.h"
+#include "./Logo/LogoScene.h"
+#include "./Navigation/navigation.h"
 
-namespace Ui {
-class MainWindow;
-}
-
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
     
@@ -28,7 +26,8 @@ public:
     void ChangeWorkScene(const QString& workName);  ////«–ªªπ§◊˜≥°æ∞
 
 private:
-    void InitView();
+    void InitUi();
+    void InitWorkScene();
     void InitTitle();
     void InitTray();        ////≥ı ºªØÕ–≈Ã
     void drawWindowShadow(QPainter &p);
@@ -37,22 +36,34 @@ private:
 
 private slots:
     void Close();
-
+    void Mail();
 protected:
     void paintEvent(QPaintEvent* event);
     void closeEvent(QCloseEvent* event);
     void showEvent(QShowEvent* event);
 
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+
     bool winEvent(MSG *message, long *result);
 private:
-    Ui::MainWindow *ui;
+
     QMap<QString,IWorkScene*> wrokScenes;
 
     QPropertyAnimation* animation_;
 
-    Tray* tray;                 ////Õ–≈Ã
-    TrayIconMenu* trayMenu;      ////Õ–≈Ã≤Àµ•¿∏
+    QGridLayout* grid_layout_;
+    LogoScene* logo_;
+    QWidget* main_window_title_;
+    Navigation* navigation_;
+    QStackedWidget* stacked_widget_;
 
+    Tray* tray_;                 ////Õ–≈Ã
+    TrayIconMenu* tray_menu_;      ////Õ–≈Ã≤Àµ•¿∏
+
+    bool		moveing_;// Û±Í∞¥œ¬
+    QPoint	    move_position_;  //“∆∂Øµƒæ‡¿Î
 };
 
 #endif // MAINWINDOW_H

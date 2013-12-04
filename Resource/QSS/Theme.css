@@ -139,7 +139,7 @@ QLabel#lbe_login_error
 
 MainWindow#main_window
 {
-        background-color:rgb(57,57,57);
+        background-color:transparent;
 }
 
 QWidget#scrollAreaWidgetContents
@@ -152,7 +152,7 @@ Navigation#navigation
         border:0pix;
 }
 
-LogoScene#logo
+LogoScene#main_scene_logo
 {
         background-color:rgb(57,57,57);
         border-image:url(:/MainScene/Resource/Img/MainScene/logo.png) 0 0 0 0 stretch stretch;
@@ -161,7 +161,7 @@ LogoScene#logo
 MyTableView
 {
         border:0px;
-        background:rgba(74,74,74,255);
+        background-color:rgba(74,74,74,255);
 }
 
 /*
@@ -196,55 +196,57 @@ QLabel#error_widget_msg
 */
 QWidget#main_window_title
 {
-        background-color:#444444;
+        height: 25px;
+        background-color:rgb(60,60,60);
 }
+
 QToolButton#main_tool_button_close
 {
-        width: 39px;
-        height: 20px;
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_normal.png) 0 0 0 0 stretch stretch;
+        width: 27px;
+        height: 22px;
+        border-image:url(:/MainScene/Resource/Img/MainScene/close.png) 0 0 0 0 stretch stretch;
 }
 
 QToolButton#main_tool_button_close:hover
 {
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_highlight.png) 0 0 0 0 stretch stretch;
+        border-image:url(:/MainScene/Resource/Img/MainScene/close_hover.png) 0 0 0 0 stretch stretch;
 }
 
 QToolButton#main_tool_button_close:pressed
 {
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_close_down.png) 0 0 0 0 stretch stretch;
+        border-image:url(:/MainScene/Resource/Img/MainScene/close_pressed.png) 0 0 0 0 stretch stretch;
 }
 
 QToolButton#main_tool_button_min
 {
-        width: 28px;
-        height: 20px;
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_normal.png) 0 0 0 0 stretch stretch;
+        width: 27px;
+        height: 22px;
+        border-image:url(:/MainScene/Resource/Img/MainScene/min.png) 0 0 0 0 stretch stretch;
 }
 
 QToolButton#main_tool_button_min:hover
 {
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_highlight.png) 0 0 0 0 stretch stretch;
+        border-image:url(:/MainScene/Resource/Img/MainScene/min_hover.png) 0 0 0 0 stretch stretch;
 }
 
 QToolButton#main_tool_button_min:pressed
 {
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_mini_down.png) 0 0 0 0 stretch stretch;
+        border-image:url(:/MainScene/Resource/Img/MainScene/min_pressed.png) 0 0 0 0 stretch stretch;
 }
 
-QToolButton#main_tool_button_set
+QToolButton#main_tool_button_praise
 {
-        width: 28px;
-        height: 20px;
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_normal.png) 0 0 0 0 stretch stretch;
+        width: 27px;
+        height: 22px;
+        border-image:url(:/MainScene/Resource/Img/MainScene/praise.png) 0 0 0 0 stretch stretch;
 }
 
-QToolButton#main_tool_button_set:hover
+QToolButton#main_tool_button_praise:hover
 {
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_hover.png) 0 0 0 0 stretch stretch;
+        border-image:url(:/MainScene/Resource/Img/MainScene/praise_hover.png) 0 0 0 0 stretch stretch;
 }
 
-QToolButton#main_tool_button_set:pressed
+QToolButton#main_tool_button_praise:pressed
 {
-        border-image:url(:/LoginScene/Resource/Img/LoginScene/btn_set_press.png) 0 0 0 0 stretch stretch;
+        border-image:url(:/MainScene/Resource/Img/MainScene/praise_pressed.png) 0 0 0 0 stretch stretch;
 }

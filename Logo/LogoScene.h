@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QMouseEvent>
 
-#include "../MainWindow.h"
+class MainWindow;
 
 namespace Ui {
 class LogoScene;
@@ -26,7 +26,7 @@ protected:
 private:
     Ui::LogoScene *ui;
 
-    MainWindow* mainWidget;
+    MainWindow* main_widget_;
     bool isInit;
 };
 

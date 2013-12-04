@@ -1,57 +1,113 @@
 #include "MainWindow.h"
-#include "ui_MainWindow.h"
 #include <QVBoxLayout>
 #include <QStringList>
 #include <QIcon>
 #include <QToolButton>
+#include <QGridLayout>
 
+#include "./AxisBaseWidget/Common.h"
 #include "./WorkScene/WelcomeScene.h"
 #include "./WorkScene/TestWorkScene.h"
 
+
+#define SHADOW_WIDTH        5
+#define RESIZE_WIDTH_MIN    0
+#define RESIZE_WIDTH_MAX    SHADOW_WIDTH
+
 MainWindow::MainWindow(QWidget *parent):
-    QMainWindow(parent),
-    tray(NULL),
-    trayMenu(NULL),
+    QWidget(parent),
+    tray_(NULL),
+    tray_menu_(NULL),
     animation_(NULL),
-    ui(new Ui::MainWindow)
+    grid_layout_(NULL),
+    logo_(NULL),
+    main_window_title_(NULL),
+    navigation_(NULL),
+    stacked_widget_(NULL)
 {
-    ui->setupUi(this);
     setWindowTitle(tr("AXIS自动化运营平台V0-02-0010"));
 
-    ui->navigation->Init(this);
-    ui->logo->Init(this);
-
-    this->setAutoFillBackground(true);
-
-    InitTray();
-    InitView();
+    InitUi();
     InitTitle();
+    InitTray();
+    InitWorkScene();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    SAFE_DELETE(animation_);
+    SAFE_DELETE(tray_);
+    SAFE_DELETE(tray_menu_);
+    SAFE_DELETE(stacked_widget_);
+    SAFE_DELETE(main_window_title_);
+    SAFE_DELETE(logo_);
+    SAFE_DELETE(grid_layout_);
+}
+
+void MainWindow::InitUi(){
+
+    ////设置窗体标题栏隐藏并设置位于顶层
+    setWindowFlags(Qt::FramelessWindowHint);
+    this->setAutoFillBackground(false);
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
+
+    grid_layout_ = new QGridLayout();
+    Q_ASSERT(grid_layout_);
+    grid_layout_->setSpacing(0);
+    grid_layout_->setContentsMargins(SHADOW_WIDTH,SHADOW_WIDTH,SHADOW_WIDTH,SHADOW_WIDTH);
+
+    main_window_title_ = new QWidget();
+    Q_ASSERT(main_window_title_);
+    main_window_title_->setObjectName("main_window_title");
+    main_window_title_->setMinimumSize(QSize(0, 20));
+    main_window_title_->setMaximumSize(QSize(16777215, 20));
+
+    logo_ = new LogoScene();
+    Q_ASSERT(logo_);
+    logo_->setObjectName("main_scene_logo");
+    logo_->setMinimumSize(QSize(0, 100));
+    logo_->setMaximumSize(QSize(16777215, 100));
+    logo_->Init(this);
+
+    navigation_ = new Navigation();
+    Q_ASSERT(navigation_);
+    navigation_->setObjectName("navigation");
+    navigation_->setMinimumSize(QSize(250, 0));
+    navigation_->setMaximumSize(QSize(250, 16777215));
+    navigation_->Init(this);
+
+    stacked_widget_ = new QStackedWidget();
+    Q_ASSERT(stacked_widget_);
+    stacked_widget_->setObjectName("main_stacked_widget");
+
+    grid_layout_->addWidget(main_window_title_,0,0,1,2);
+    grid_layout_->addWidget(logo_,1,0,1,1);
+    grid_layout_->addWidget(navigation_,2,0,1,1);
+    grid_layout_->addWidget(stacked_widget_,1,1,2,1);
+    this->setLayout(grid_layout_);
 }
 
 void MainWindow::paintEvent(QPaintEvent*){
 
     QPainter p(this);
-//    QStyleOption opt;
-//    opt.init(this);
-//    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-qDebug()<<"a";
-    if(this->width() > 45 && this->height() > 45)
-        drawWindowShadow(p);
 
-    p.setPen(Qt::NoPen);
-    p.setBrush(Qt::white);
-    p.drawRoundedRect(QRect(18,18,this->width() - 36,this->height() - 36),2.0f,2.0f);
+    QStyleOption opt;
+    opt.init(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    if(this->width() > 2*SHADOW_WIDTH && this->height() >  2*SHADOW_WIDTH)
+        drawWindowShadow(p);
+////设置对话框圆角
+//    p.setPen(Qt::NoPen);
+//    p.setBrush(Qt::white);
+//    p.drawRoundedRect(QRect(RESIZE_WIDTH_MIN,RESIZE_WIDTH_MIN,
+//                            this->width() - 2*RESIZE_WIDTH_MIN,this->height() - 2*RESIZE_WIDTH_MIN),
+//                      2.0f,2.0f);
 
 }
 
 void MainWindow::drawWindowShadow(QPainter &p)
 {
-    qDebug()<<"l";
     QList<QPixmap> pixmaps;
     pixmaps.append(QPixmap(":/MainScene/Resource/Img/MainScene/shadow_left.png"));
     pixmaps.append(QPixmap(":/MainScene/Resource/Img/MainScene/shadow_right.png"));
@@ -62,29 +118,26 @@ void MainWindow::drawWindowShadow(QPainter &p)
     pixmaps.append(QPixmap(":/MainScene/Resource/Img/MainScene/shadow_corner3.png"));
     pixmaps.append(QPixmap(":/MainScene/Resource/Img/MainScene/shadow_corner4.png"));
 
-    p.drawPixmap(0,0,20,20,pixmaps[4]);
-    p.drawPixmap(this->width() - 20,0,20,20,pixmaps[5]);
-    p.drawPixmap(0,this->height() - 20,20,20,pixmaps[6]);
-    p.drawPixmap(this->width() - 20,this->height() - 20,20,20,pixmaps[7]);
+    p.drawPixmap(0,0,SHADOW_WIDTH,SHADOW_WIDTH,pixmaps[4]);
+    p.drawPixmap(this->width() - SHADOW_WIDTH,0,SHADOW_WIDTH,SHADOW_WIDTH,pixmaps[5]);
+    p.drawPixmap(0,this->height() - SHADOW_WIDTH,SHADOW_WIDTH,SHADOW_WIDTH,pixmaps[6]);
+    p.drawPixmap(this->width() - SHADOW_WIDTH,this->height() - SHADOW_WIDTH,SHADOW_WIDTH,SHADOW_WIDTH,pixmaps[7]);
 
-    p.drawPixmap(0,20,20,this->height() - 40,pixmaps[0].scaled(20,this->height() - 40));
-    p.drawPixmap(this->width() - 20,20,20,this->height() - 40,pixmaps[1].scaled(20,this->height() - 40));
-    p.drawPixmap(20,0,this->width() - 40,20,pixmaps[2].scaled(this->width() - 40,20));
-    p.drawPixmap(20,this->height() - 20,this->width() - 40,20,pixmaps[3].scaled(this->width() - 40,20));
+    p.drawPixmap(0,SHADOW_WIDTH,SHADOW_WIDTH,this->height() - 2*SHADOW_WIDTH,pixmaps[0].scaled(SHADOW_WIDTH,this->height() - 2*SHADOW_WIDTH));
+    p.drawPixmap(this->width() - SHADOW_WIDTH,SHADOW_WIDTH,SHADOW_WIDTH,this->height() - 2*SHADOW_WIDTH,pixmaps[1].scaled(SHADOW_WIDTH,this->height() - 2*SHADOW_WIDTH));
+    p.drawPixmap(SHADOW_WIDTH,0,this->width() - 2*SHADOW_WIDTH,SHADOW_WIDTH,pixmaps[2].scaled(this->width() - 2*SHADOW_WIDTH,SHADOW_WIDTH));
+    p.drawPixmap(SHADOW_WIDTH,this->height() - SHADOW_WIDTH,this->width() - 2*SHADOW_WIDTH,SHADOW_WIDTH,pixmaps[3].scaled(this->width() - 2*SHADOW_WIDTH,SHADOW_WIDTH));
 }
 
-void MainWindow::InitView(){
-
-    ////设置窗体标题栏隐藏并设置位于顶层
-    setWindowFlags(Qt::FramelessWindowHint);
+void MainWindow::InitWorkScene(){
 
     ////设置导航栏
     QIcon icon(":/Navigation/Resource/Img/Navigation/button.png");
     QStringList list;
     list<<"emma"<<"karl"<<"jame"<<tr("你们");
-    ui->navigation->addNavigationBar(tr("资产"),icon,list);
-    ui->navigation->addNavigationBar(tr("装机"),icon,list);
-    ui->navigation->addNavigationBar(tr("监控"),icon,list);
+    navigation_->addNavigationBar(tr("资产"),icon,list);
+    navigation_->addNavigationBar(tr("装机"),icon,list);
+    navigation_->addNavigationBar(tr("监控"),icon,list);
 
     WelcomeScene* welcome = new WelcomeScene("welcome");
     AddWorkScene("welcome",welcome);
@@ -101,38 +154,38 @@ void MainWindow::InitView(){
     test3->SetText(tr("资产")+"jame");
     AddWorkScene(tr("资产")+"jame",test3);
 
-    ui->stackedWidget->setCurrentIndex(0);
-    ui->navigation->addVerticalSpacer();
+    stacked_widget_->setCurrentIndex(0);
+    navigation_->addVerticalSpacer();
 }
 
 void MainWindow::InitTitle(){
 
-    QWidget* parent = ui->main_window_title;
+    QWidget* parent = main_window_title_;
     parent->setObjectName("main_window_title");
-    parent->setMaximumHeight(20);
-    parent->setMinimumHeight(20);
+//    parent->setMaximumHeight(22);
+//    parent->setMinimumHeight(22);
     QHBoxLayout *layout = new QHBoxLayout(parent);
     Q_ASSERT(layout);
 
-    layout->addSpacerItem(new QSpacerItem(40,20,QSizePolicy::Expanding,QSizePolicy::Minimum));
+    layout->addSpacerItem(new QSpacerItem(40,30,QSizePolicy::Expanding,QSizePolicy::Minimum));
 
-    ////创建标题栏-设置
-    QToolButton* tool_button_set = new QToolButton(parent);
-    Q_ASSERT(tool_button_set);
-    tool_button_set->setObjectName("main_tool_button_set");
-    tool_button_set->setAutoRaise(true);
-    //connect(tool_button_set,SIGNAL(clicked()),this,SLOT(doToolButtonSet()));
-    layout->addWidget(tool_button_set);
+    ////创建标题栏-点赞
+    QToolButton* tool_button_praise = new QToolButton(parent);
+    Q_ASSERT(tool_button_praise);
+    tool_button_praise->setObjectName("main_tool_button_praise");
+    tool_button_praise->setAutoRaise(true);
+    connect(tool_button_praise,SIGNAL(clicked()),this,SLOT(Mail()));
+    layout->addWidget(tool_button_praise);
 
-    ////创建标题栏-最小化
-    QToolButton* tool_button_min = new QToolButton(parent);
-    Q_ASSERT(tool_button_min);
-    tool_button_min->setObjectName("main_tool_button_min");
-    tool_button_min->setAutoRaise(true);
-    connect(tool_button_min,SIGNAL(clicked()),this,SLOT(showMinimized()));
-    layout->addWidget(tool_button_min);
+//    ////创建标题栏-最小化
+//    QToolButton* tool_button_min = new QToolButton(parent);
+//    Q_ASSERT(tool_button_min);
+//    tool_button_min->setObjectName("main_tool_button_min");
+//    tool_button_min->setAutoRaise(true);
+//    connect(tool_button_min,SIGNAL(clicked()),this,SLOT(showMaximized()));
+//    layout->addWidget(tool_button_min);
 
-    ////创建标题栏-推出
+    ////创建标题栏-退出
     QToolButton* tool_button_close = new QToolButton(parent);
     Q_ASSERT(tool_button_close);
     tool_button_close->setObjectName("main_tool_button_close");
@@ -147,15 +200,15 @@ void MainWindow::InitTitle(){
 }
 
 void MainWindow::InitTray(){
-    tray = new Tray(this);
-    trayMenu = new TrayIconMenu(this);
-    Q_ASSERT(tray);
-    Q_ASSERT(trayMenu);
+    tray_ = new Tray(this);
+    tray_menu_ = new TrayIconMenu(this);
+    Q_ASSERT(tray_);
+    Q_ASSERT(tray_menu_);
 
-    tray->SetMainWindow(this);
-    tray->setContextMenu(trayMenu);
-    tray->show();
-    tray->showMessage(tr("AXIS自动化运营平台"),tr("不可思议之 AXIS 已启动！"),
+    tray_->SetMainWindow(this);
+    tray_->setContextMenu(tray_menu_);
+    tray_->show();
+    tray_->showMessage(tr("AXIS自动化运营平台"),tr("不可思议之 AXIS 已启动！"),
                           QSystemTrayIcon::NoIcon,2000);
 }
 
@@ -166,11 +219,11 @@ void MainWindow::ChangeWorkScene(const QString& workName){
         return;
     }
 
-    for(int index = 0;index < ui->stackedWidget->count();++index){
-        IWorkScene* scene = static_cast<IWorkScene*>(ui->stackedWidget->widget(index));
+    for(int index = 0;index < stacked_widget_->count();++index){
+        IWorkScene* scene = static_cast<IWorkScene*>(stacked_widget_->widget(index));
         Q_ASSERT(scene);
         if(workName == scene->GetSceneName()){
-            ui->stackedWidget->setCurrentIndex(index);
+            stacked_widget_->setCurrentIndex(index);
 
         }
     }
@@ -185,13 +238,15 @@ bool MainWindow::AddWorkScene(const QString& name,IWorkScene* scene){
     }
     wrokScenes[name] = scene;
 
-    return ui->stackedWidget->addWidget(scene) == 0;
+    return stacked_widget_->addWidget(scene) == 0;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event){
-    if (tray->isVisible()) {
+    if (tray_->isVisible()) {
         hide();
         event->ignore();
+        tray_->showMessage(tr("AXIS自动化运营平台"),tr("单击打开！"),
+                              QSystemTrayIcon::NoIcon,1000);
     }
 }
 
@@ -214,6 +269,11 @@ void MainWindow::showEvent(QShowEvent* event){
 void MainWindow::Close(){
     this->close();
 }
+#include <windows.h>
+void MainWindow::Mail(){
+
+    system("start outlook.exe /f ./Resource/mail/default.msg");
+}
 
 bool MainWindow::winEvent(MSG *message, long *result)
 {
@@ -228,24 +288,51 @@ bool MainWindow::winEvent(MSG *message, long *result)
         }else{
             return false;
         }
-        if(xPos > 18 && xPos < 22)
+        if(xPos >  RESIZE_WIDTH_MIN && xPos <  RESIZE_WIDTH_MAX)
             *result = HTLEFT;
-        if(xPos > (this->width() - 22) && xPos < (this->width() - 18))
+        if(xPos > (this->width() - RESIZE_WIDTH_MAX) && xPos < (this->width() - RESIZE_WIDTH_MIN))
             *result = HTRIGHT;
-        if(yPos > 18 && yPos < 22)
+        if(yPos > RESIZE_WIDTH_MIN && yPos < RESIZE_WIDTH_MAX)
             *result = HTTOP;
-        if(yPos > (this->height() - 22) && yPos < (this->height() - 18))
+        if(yPos > (this->height() - RESIZE_WIDTH_MAX) && yPos < (this->height() - RESIZE_WIDTH_MIN))
             *result = HTBOTTOM;
-        if(xPos > 18 && xPos < 22 && yPos > 18 && yPos < 22)
+        if(xPos > RESIZE_WIDTH_MIN && xPos < RESIZE_WIDTH_MAX && yPos > RESIZE_WIDTH_MIN && yPos < RESIZE_WIDTH_MAX)
             *result = HTTOPLEFT;
-        if(xPos > (this->width() - 22) && xPos < (this->width() - 18) && yPos > 18 && yPos < 22)
+        if(xPos > (this->width() - RESIZE_WIDTH_MAX) && xPos < (this->width() - RESIZE_WIDTH_MIN) && yPos > RESIZE_WIDTH_MIN && yPos < RESIZE_WIDTH_MAX)
             *result = HTTOPRIGHT;
-        if(xPos > 18 && xPos < 22 && yPos > (this->height() - 22) && yPos < (this->height() - 18))
+        if(xPos > RESIZE_WIDTH_MIN && xPos < RESIZE_WIDTH_MAX && yPos > (this->height() - RESIZE_WIDTH_MAX) && yPos < (this->height() - RESIZE_WIDTH_MIN))
             *result = HTBOTTOMLEFT;
-        if(xPos > (this->width() - 22) && xPos < (this->width() - 18) && yPos > (this->height() - 22) && yPos < (this->height() - 18))
+        if(xPos > (this->width() - RESIZE_WIDTH_MAX) && xPos < (this->width() - RESIZE_WIDTH_MIN) && yPos > (this->height() - RESIZE_WIDTH_MAX) && yPos < (this->height() - RESIZE_WIDTH_MIN))
             *result = HTBOTTOMRIGHT;
 
         return true;
     }
     return false;
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    moveing_ = true;
+    move_position_ = event->globalPos() - pos();
+    return QWidget::mousePressEvent(event);
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (moveing_
+        &&(event->buttons()
+        &&Qt::LeftButton)
+        &&(event->globalPos()-move_position_).manhattanLength() > QApplication::startDragDistance()
+        ){
+        move(event->globalPos()-move_position_);
+        move_position_ = event->globalPos() - pos();
+    }
+    return QWidget::mouseMoveEvent(event);
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    //设置鼠标为未被按下
+    moveing_ = false;
+    event->accept();
 }

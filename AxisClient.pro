@@ -27,11 +27,11 @@ HEADERS += \
     Logo/LogoScene.h \
     Tray/Tray.h \
     Tray/TrayIconMenu.h \
-    AxisBaseWidget/AErrorWidget.h
+    AxisBaseWidget/AErrorWidget.h \
+    AxisBaseWidget/Common.h
 
 FORMS += \
     Login/LoginScene.ui \
-    MainWindow.ui \
     WorkScene/WelcomeScene.ui \
     WorkScene/TestWorkScene.ui \
     Logo/LogoScene.ui

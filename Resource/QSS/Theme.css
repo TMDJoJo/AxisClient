@@ -139,6 +139,8 @@ QLabel#lbe_login_error
 
 MainWindow#main_window
 {
+        border:0px;
+        background:transparent;
         background-color:transparent;
 }
 
@@ -149,7 +151,7 @@ QWidget#scrollAreaWidgetContents
 
 Navigation#navigation
 {
-        border:0pix;
+        border:0px;
 }
 
 LogoScene#main_scene_logo
@@ -234,6 +236,40 @@ QToolButton#main_tool_button_min:pressed
         border-image:url(:/MainScene/Resource/Img/MainScene/min_pressed.png) 0 0 0 0 stretch stretch;
 }
 
+QToolButton#main_tool_button_max
+{
+        width: 27px;
+        height: 22px;
+        border-image:url(:/MainScene/Resource/Img/MainScene/max.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_max:hover
+{
+        border-image:url(:/MainScene/Resource/Img/MainScene/max_hover.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_max:pressed
+{
+        border-image:url(:/MainScene/Resource/Img/MainScene/max_pressed.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_normal
+{
+        width: 27px;
+        height: 22px;
+        border-image:url(:/MainScene/Resource/Img/MainScene/normal.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_normal:hover
+{
+        border-image:url(:/MainScene/Resource/Img/MainScene/normal_hover.png) 0 0 0 0 stretch stretch;
+}
+
+QToolButton#main_tool_button_normal:pressed
+{
+        border-image:url(:/MainScene/Resource/Img/MainScene/normal_pressed.png) 0 0 0 0 stretch stretch;
+}
+
 QToolButton#main_tool_button_praise
 {
         width: 27px;
@@ -250,3 +286,9 @@ QToolButton#main_tool_button_praise:pressed
 {
         border-image:url(:/MainScene/Resource/Img/MainScene/praise_pressed.png) 0 0 0 0 stretch stretch;
 }
+
+/*
+*
+*/
+
+

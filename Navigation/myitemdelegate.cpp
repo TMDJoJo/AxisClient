@@ -63,7 +63,7 @@ void MyItemDelegate::paint(QPainter * painter,const QStyleOptionViewItem & optio
 
 }
 
-bool MyItemDelegate::editorEvent(QEvent * event,QAbstractItemModel * model,const QStyleOptionViewItem & option,const QModelIndex & index)
+bool MyItemDelegate::editorEvent(QEvent * event,QAbstractItemModel * model,const QStyleOptionViewItem&,const QModelIndex & index)
 {
 
       if(event->type()==QEvent::MouseButtonPress){

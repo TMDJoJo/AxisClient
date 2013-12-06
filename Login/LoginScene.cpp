@@ -117,12 +117,13 @@ void LoginScene::doToolButtonSet(){
 void LoginScene::doToolButtonClose(){
     qApp->quit();
 }
-
+#include "./AxisBaseWidget/AMessageBox.h"
 void LoginScene::on_pbtn_login_clicked()
 {
     if(ui->ledt_userName->text() == "a"){
         AErrorWidget::warning(this,tr("ÃÜÂë´íÎó£¡"));
         //AErrorWidget::information(this,tr("ÃÜÂë´íÎó£¡"));
+        AMessageBox::warning(this,"123","23233");
     }
     else{
         accept();

@@ -34,6 +34,12 @@
         <file>Resource/Img/MainScene/praise_pressed.png</file>
         <file>Resource/Img/MainScene/praise.png</file>
         <file>Resource/Img/MainScene/praise_hover.png</file>
+        <file>Resource/Img/MainScene/max_pressed.png</file>
+        <file>Resource/Img/MainScene/max.png</file>
+        <file>Resource/Img/MainScene/max_hover.png</file>
+        <file>Resource/Img/MainScene/normal.png</file>
+        <file>Resource/Img/MainScene/normal_pressed.png</file>
+        <file>Resource/Img/MainScene/normal_hover.png</file>
     </qresource>
     <qresource prefix="/Tray">
         <file>Resource/Img/Tray/tray_icon.png</file>

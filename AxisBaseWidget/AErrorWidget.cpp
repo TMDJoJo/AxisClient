@@ -107,7 +107,7 @@ void AErrorWidget::setTipIcon(const QPixmap& pixmap){
     icon_label_->setPixmap(pixmap);
 }
 
-void AErrorWidget::paintEvent(QPaintEvent* event){
+void AErrorWidget::paintEvent(QPaintEvent*){
     QStyleOption opt;
     opt.init(this);
     QPainter p(this);

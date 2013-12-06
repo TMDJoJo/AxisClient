@@ -12,7 +12,8 @@ SOURCES += \
     Logo/LogoScene.cpp \
     Tray/Tray.cpp \
     Tray/TrayIconMenu.cpp \
-    AxisBaseWidget/AErrorWidget.cpp
+    AxisBaseWidget/AErrorWidget.cpp \
+    AxisBaseWidget/AMessageBox.cpp
 
 HEADERS += \
     Login/LoginScene.h \
@@ -28,7 +29,8 @@ HEADERS += \
     Tray/Tray.h \
     Tray/TrayIconMenu.h \
     AxisBaseWidget/AErrorWidget.h \
-    AxisBaseWidget/Common.h
+    AxisBaseWidget/Common.h \
+    AxisBaseWidget/AMessageBox.h
 
 FORMS += \
     Login/LoginScene.ui \

@@ -49,7 +49,11 @@ void MainWindow::InitUi(){
     ////设置窗体标题栏隐藏并设置位于顶层
     setWindowFlags(Qt::FramelessWindowHint);
     this->setAutoFillBackground(false);
-    this->setAttribute(Qt::WA_TranslucentBackground, true);
+
+    ////TODO: XP下启用一下属性后会失去焦点，客户端出现卡死现象
+    ////https://bugreports.qt-project.org/browse/QTBUG-17548
+    ////暂时采用void MainWindow::showEvent(QShowEvent* event)中调用一次repaint()解决
+    this->setAttribute(Qt::WA_TranslucentBackground,true);
 
     grid_layout_ = new QGridLayout();
     Q_ASSERT(grid_layout_);
@@ -85,6 +89,13 @@ void MainWindow::InitUi(){
     grid_layout_->addWidget(navigation_,2,0,1,1);
     grid_layout_->addWidget(stacked_widget_,1,1,2,1);
     this->setLayout(grid_layout_);
+
+    animation_ = new QPropertyAnimation(this,"windowOpacity");
+    Q_ASSERT(animation_);
+    animation_->setDuration(400);
+    animation_->setStartValue(0);
+    animation_->setEndValue(1);
+
 }
 
 void MainWindow::paintEvent(QPaintEvent*){
@@ -103,7 +114,6 @@ void MainWindow::paintEvent(QPaintEvent*){
 //    p.drawRoundedRect(QRect(RESIZE_WIDTH_MIN,RESIZE_WIDTH_MIN,
 //                            this->width() - 2*RESIZE_WIDTH_MIN,this->height() - 2*RESIZE_WIDTH_MIN),
 //                      2.0f,2.0f);
-
 }
 
 void MainWindow::drawWindowShadow(QPainter &p)
@@ -175,15 +185,33 @@ void MainWindow::InitTitle(){
     tool_button_praise->setObjectName("main_tool_button_praise");
     tool_button_praise->setAutoRaise(true);
     connect(tool_button_praise,SIGNAL(clicked()),this,SLOT(Mail()));
+    tool_button_praise->setToolTip(tr("赞一下我们吧"));
     layout->addWidget(tool_button_praise);
 
-//    ////创建标题栏-最小化
-//    QToolButton* tool_button_min = new QToolButton(parent);
-//    Q_ASSERT(tool_button_min);
-//    tool_button_min->setObjectName("main_tool_button_min");
-//    tool_button_min->setAutoRaise(true);
-//    connect(tool_button_min,SIGNAL(clicked()),this,SLOT(showMaximized()));
-//    layout->addWidget(tool_button_min);
+    ////创建标题栏-最小化
+    QToolButton* tool_button_min = new QToolButton(parent);
+    Q_ASSERT(tool_button_min);
+    tool_button_min->setObjectName("main_tool_button_min");
+    tool_button_min->setAutoRaise(true);
+    connect(tool_button_min,SIGNAL(clicked()),this,SLOT(showMinimized()));
+    layout->addWidget(tool_button_min);
+
+    ////创建标题栏-最大化
+    tool_button_max_ = new QToolButton(parent);
+    Q_ASSERT(tool_button_max_);
+    tool_button_max_->setObjectName("main_tool_button_max");
+    tool_button_max_->setAutoRaise(true);
+    connect(tool_button_max_,SIGNAL(clicked()),this,SLOT(MaxOrNormal()));
+    layout->addWidget(tool_button_max_);
+
+    ////创建标题栏-还原
+    tool_button_normal_ = new QToolButton(parent);
+    Q_ASSERT(tool_button_normal_);
+    tool_button_normal_->setObjectName("main_tool_button_normal");
+    tool_button_normal_->setAutoRaise(false);
+    connect(tool_button_normal_,SIGNAL(clicked()),this,SLOT(MaxOrNormal()));
+    layout->addWidget(tool_button_normal_);
+    tool_button_normal_->hide();
 
     ////创建标题栏-退出
     QToolButton* tool_button_close = new QToolButton(parent);
@@ -207,6 +235,7 @@ void MainWindow::InitTray(){
 
     tray_->SetMainWindow(this);
     tray_->setContextMenu(tray_menu_);
+    tray_->setToolTip(tr("提示\n我是谁"));
     tray_->show();
     tray_->showMessage(tr("AXIS自动化运营平台"),tr("不可思议之 AXIS 已启动！"),
                           QSystemTrayIcon::NoIcon,2000);
@@ -251,32 +280,41 @@ void MainWindow::closeEvent(QCloseEvent *event){
 }
 
 void MainWindow::showEvent(QShowEvent* event){
-    animation_ = new QPropertyAnimation(this,"windowOpacity");
-    Q_ASSERT(animation_);
-    animation_->setDuration(400);
-    animation_->setStartValue(0);
-    animation_->setEndValue(1);
-    animation_->start();
-//    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
-//    animation->setDuration(300);
-//    animation->setStartValue(QRect(this->pos().x()+1050*0.2,this->pos().y()+600*0.2,1050*0.4,600*0.4));
-//    animation->setEndValue(QRect(this->pos().x(),this->pos().y(), 1050, 600));
-//    animation->start();
 
-    event->ignore();
+    animation_->start();
+
+    QWidget::showEvent(event);
+    repaint();
+    return;
 }
 
 void MainWindow::Close(){
     this->close();
 }
-#include <windows.h>
+
 void MainWindow::Mail(){
 
     system("start outlook.exe /f ./Resource/mail/default.msg");
 }
 
+void MainWindow::MaxOrNormal(){
+    if(this->isMaximized()){
+        tool_button_normal_->hide();
+        tool_button_max_->show();
+        this->showNormal();
+    }
+    else{
+        tool_button_max_->hide();
+        tool_button_normal_->show();
+        this->showMaximized();
+    }
+}
+
 bool MainWindow::winEvent(MSG *message, long *result)
 {
+    if(this->isMaximized()){
+        return false;
+    }
     switch(message->message)
     {
     case WM_NCHITTEST:
@@ -319,6 +357,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
+    if(this->isMaximized())
+        return QWidget::mouseMoveEvent(event);
     if (moveing_
         &&(event->buttons()
         &&Qt::LeftButton)

@@ -37,6 +37,7 @@ private:
 private slots:
     void Close();
     void Mail();
+    void MaxOrNormal();
 protected:
     void paintEvent(QPaintEvent* event);
     void closeEvent(QCloseEvent* event);
@@ -61,6 +62,9 @@ private:
 
     Tray* tray_;                 ////托盘
     TrayIconMenu* tray_menu_;      ////托盘菜单栏
+
+    QToolButton* tool_button_max_;
+    QToolButton* tool_button_normal_;
 
     bool		moveing_;//鼠标按下
     QPoint	    move_position_;  //移动的距离

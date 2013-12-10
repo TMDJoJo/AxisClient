@@ -145,24 +145,24 @@ void MainWindow::InitWorkScene(){
     QIcon icon(":/Navigation/Resource/Img/Navigation/button.png");
     QStringList list;
     list<<"emma"<<"karl"<<"jame"<<tr("你们");
-    navigation_->addNavigationBar(tr("资产"),icon,list);
-    navigation_->addNavigationBar(tr("装机"),icon,list);
-    navigation_->addNavigationBar(tr("监控"),icon,list);
+    navigation_->addNavigationBar(tr("zc"),icon,list);
+    navigation_->addNavigationBar(tr("zj"),icon,list);
+    navigation_->addNavigationBar(tr("jk"),icon,list);
 
     WelcomeScene* welcome = new WelcomeScene("welcome");
     AddWorkScene("welcome",welcome);
 
-    TestWorkScene* test1 = new TestWorkScene(tr("资产"));
-    test1->SetText(tr("资产")+"emma");
-    AddWorkScene(tr("资产"),test1);
+    TestWorkScene* test1 = new TestWorkScene(tr("zc"));
+    test1->SetText(tr("zc")+"emma");
+    AddWorkScene(tr("zc"),test1);
 
-    TestWorkScene* test2 = new TestWorkScene(tr("资产")+"karl");
-    test2->SetText(tr("资产")+"karl");
-    AddWorkScene(tr("资产")+"karl",test2);
+    TestWorkScene* test2 = new TestWorkScene(tr("zc")+"karl");
+    test2->SetText(tr("zc")+"karl");
+    AddWorkScene(tr("zc")+"karl",test2);
 
-    TestWorkScene* test3 = new TestWorkScene(tr("资产")+"jame");
-    test3->SetText(tr("资产")+"jame");
-    AddWorkScene(tr("资产")+"jame",test3);
+    TestWorkScene* test3 = new TestWorkScene(tr("zc")+"jame");
+    test3->SetText(tr("zc")+"jame");
+    AddWorkScene(tr("zc")+"jame",test3);
 
     stacked_widget_->setCurrentIndex(0);
     navigation_->addVerticalSpacer();
@@ -237,7 +237,7 @@ void MainWindow::InitTray(){
     tray_->setContextMenu(tray_menu_);
     tray_->setToolTip(tr("提示\n我是谁"));
     tray_->show();
-    tray_->showMessage(tr("AXIS自动化运营平台"),tr("不可思议之 AXIS 已启动！"),
+    tray_->showMessage(tr("提示"),tr("不可思议之 我已启动！"),
                           QSystemTrayIcon::NoIcon,2000);
 }
 
